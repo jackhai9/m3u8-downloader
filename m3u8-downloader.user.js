@@ -94,6 +94,57 @@
     setTimeout(checkVideo, 3000);
   }
 
+  async function downloadCaption(url) {
+    try {
+        const title = getTitle();
+        const lang = url.includes('/CN.vtt') ? 'CN' : 'EN';
+        const filename = `${title}_${lang}.vtt`;
+
+        console.log(`Downloading caption: ${url}`);
+        console.log(`Saving as: ${filename}`);
+
+        // 使用 XMLHttpRequest 替代 fetch
+        return new Promise((resolve, reject) => {
+            let xhr = new originXHR();// 使用原始的 XMLHttpRequest
+            xhr.open('GET', url, true);
+            xhr.responseType = 'text';
+
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    // 创建 Blob 对象
+                    const blob = new Blob([xhr.response], { type: 'text/vtt' });
+                    const downloadUrl = URL.createObjectURL(blob);
+
+                    // 创建下载链接并触发下载
+                    const a = document.createElement('a');
+                    a.href = downloadUrl;
+                    a.download = filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+
+                    // 清理 URL 对象
+                    URL.revokeObjectURL(downloadUrl);
+
+                    console.log(`Caption downloaded: ${filename}`);
+                    resolve();
+                } else {
+                    reject(new Error(`Failed to download caption: ${xhr.status}`));
+                }
+            };
+
+            xhr.onerror = function() {
+                reject(new Error('Network error occurred'));
+            };
+
+            xhr.send();
+        });
+
+    } catch (error) {
+        console.error('Error downloading caption:', error);
+    }
+}
+
   function resetAjax() {
     if (window._hadResetAjax) { // 如果已经重置过，则不再进入。解决开发时局部刷新导致重新加载问题
       return
@@ -127,12 +178,12 @@
   // 获取顶部 window title，因可能存在跨域问题，故使用 try catch 进行保护
   function getTitle() {
     let title = document.title;
-    try {
-      title = window.top.document.title
-    } catch (error) {
-      console.log(error)
+    let metaTitle = document.querySelector('meta[property="og:title"]');
+    if (metaTitle) {
+        title = metaTitle.getAttribute('content');
+        console.log("从 meta 获取标题:", title);
     }
-    return title
+    return title.replace("BTC PAF","Video")
   }
 
   function appendDom() {
@@ -219,6 +270,25 @@
     })
 
     m3u8Append.addEventListener('click', function () {
+
+        // 获取视频 ID
+    const videoUrl = m3u8Target;
+    if (!videoUrl) return;
+
+    const videoId = videoUrl.split('/')[3];// 从 m3u8 URL 中提取视频 ID
+    console.log("视频 ID:", videoId);
+
+    // 构造字幕 URL
+    const baseUrl = `https://vz-9a847249-45e.b-cdn.net/${videoId}`;
+    const cnUrl = `${baseUrl}/captions/CN.vtt`;
+    const enUrl = `${baseUrl}/captions/EN.vtt`;
+
+    console.log("尝试下载字幕:", cnUrl, enUrl);
+
+    // 下载字幕
+    downloadCaption(cnUrl);
+    downloadCaption(enUrl);
+
       var _hmt = _hmt || [];
       (function () {
         var hm = document.createElement("script");
