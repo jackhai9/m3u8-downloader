@@ -97,8 +97,8 @@
   async function downloadCaption(url) {
     try {
         const title = getTitle();
-        const lang = url.includes('/CN.vtt') ? 'CN' : 'EN';
-        const filename = `${title}_${lang}.vtt`;
+        const lang = url.includes('/CN.vtt') ? 'zh' : 'en';
+        const filename = `${title}.${lang}.vtt`;
 
         console.log(`Downloading caption: ${url}`);
         console.log(`Saving as: ${filename}`);
