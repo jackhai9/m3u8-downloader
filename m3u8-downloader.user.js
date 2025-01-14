@@ -97,8 +97,8 @@
   async function downloadCaption(url) {
     try {
         const title = getTitle();
-        const lang = url.includes('/CN.vtt') ? 'zh' : 'en';
-        const filename = `${title}.${lang}.vtt`;
+        const lang = url.includes('/CN.vtt') ? 'CN' : 'EN';
+        const filename = `${title}_${lang}.vtt`;
 
         console.log(`Downloading caption: ${url}`);
         console.log(`Saving as: ${filename}`);
@@ -146,28 +146,24 @@
 }
 
   function resetAjax() {
-    console.log("resetAjax 开始执行");
     if (window._hadResetAjax) { // 如果已经重置过，则不再进入。解决开发时局部刷新导致重新加载问题
-      console.log("XHR 已经重置过，跳过");
       return
     }
-    console.log("准备重置 XHR");
     window._hadResetAjax = true
 
     var originOpen = originXHR.prototype.open
     window.XMLHttpRequest = function () {
-      console.log("创建新的 XHR");
       var realXHR = new originXHR()
       realXHR.open = function (method, url) {
-        // 转换 URL 为字符串并确保它存在
-            const urlStr = url.toString();
-            console.log("拦截到请求:", method, urlStr);
-            if (urlStr) {
-                // 检查 m3u8
-                if (urlStr.indexOf('.m3u8') > 0) {
-                    checkM3u8Url(urlStr);
-                }
-            }
+        url.toString() && url.toString().indexOf('.m3u8') > 0 && checkM3u8Url(url.toString())
+        // if (url.toString() && url.toString().toLocaleLowerCase().indexOf('.mp4') > 0) {
+        //   appendDom();
+        //   document.getElementById('mp4-show').style.display = 'block'
+        //   mp4Objs.push({
+        //     url,
+        //     fileName: url.slice(url.lastIndexOf('/') + 1).split('?')[0],
+        //   });
+        // }
         originOpen.call(realXHR, method, url)
       }
       return realXHR
