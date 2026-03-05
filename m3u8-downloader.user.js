@@ -1,7 +1,8 @@
 // ==UserScript==
 // @name         【改写】m3u8-downloader
 // @namespace    https://github.com/Momo707577045/m3u8-downloader
-// @version      0.10.3
+// @icon         https://avatars.githubusercontent.com/u/5935568?s=128
+// @version      0.10.4
 // @description  https://github.com/Momo707577045/m3u8-downloader 配套插件
 // @author       Momo707577045
 // @include      *
