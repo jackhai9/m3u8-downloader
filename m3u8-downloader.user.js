@@ -1,15 +1,15 @@
 // ==UserScript==
 // @name         m3u8-downloader
 // @namespace    https://github.com/Momo707577045/m3u8-downloader
-// @version      0.10.1
+// @version      0.10.2
 // @description  https://github.com/Momo707577045/m3u8-downloader 配套插件
 // @author       Momo707577045
 // @include      *
 // @exclude      http://blog.luckly-mjw.cn/tool-show/m3u8-downloader/index.html
 // @exclude      https://blog.luckly-mjw.cn/tool-show/m3u8-downloader/index.html
 // @exclude      https://www.bilibili.com/*
-// @downloadURL	 https://blog.luckly-mjw.cn/tool-show/m3u8-downloader/m3u8-downloader.user.js
-// @updateURL	   https://blog.luckly-mjw.cn/tool-show/m3u8-downloader/m3u8-downloader.user.js
+// @downloadURL  https://raw.githubusercontent.com/jackhai9/m3u8-downloader/master/m3u8-downloader.user.js
+// @updateURL    https://raw.githubusercontent.com/jackhai9/m3u8-downloader/master/m3u8-downloader.user.js
 // @grant        none
 // @run-at document-start
 // ==/UserScript==
