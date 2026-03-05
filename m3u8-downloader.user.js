@@ -2,9 +2,9 @@
 // @name         【改写】m3u8-downloader
 // @namespace    https://github.com/Momo707577045/m3u8-downloader
 // @icon         https://avatars.githubusercontent.com/u/5935568?s=128
-// @version      0.10.4
+// @version      0.10.5
 // @description  https://github.com/Momo707577045/m3u8-downloader 配套插件
-// @author       Momo707577045
+// @author       jackhai9
 // @include      *
 // @exclude      http://blog.luckly-mjw.cn/tool-show/m3u8-downloader/index.html
 // @exclude      https://blog.luckly-mjw.cn/tool-show/m3u8-downloader/index.html
